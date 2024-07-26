@@ -1,3 +1,4 @@
+import { STATUS_CODES } from "../constants/statusCodes";
 import { IUser, NewUser } from "../types/types";
 
 class Connector {
@@ -11,6 +12,7 @@ class Connector {
     method: string = "GET",
     body: unknown = undefined
   ) {
+    console.log(this.baseURL);
     const requestInit = {
       method: method,
       headers: {
@@ -20,15 +22,19 @@ class Connector {
     };
     const response = await fetch(`${this.baseURL}/${id}`, requestInit);
     const status = response.status;
+    console.log(status);
     const message = await response.json();
 
     return { status, message };
   }
 
-  async getUsers(): Promise<{
-    status: number;
-    users: IUser[] | { message: string };
-  }> {
+  async getUsers(): Promise<
+    | {
+        status: STATUS_CODES.OK;
+        users: IUser[];
+      }
+    | { status: string; users: string }
+  > {
     const { status, message: users } = await this.request();
 
     return { status, users };
@@ -68,6 +74,6 @@ class Connector {
   }
 }
 
-const connector = new Connector("/api/users");
+const connector = new Connector("http://localhost:4000/api/users");
 
 export { connector };
