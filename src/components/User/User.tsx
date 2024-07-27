@@ -1,5 +1,6 @@
 import { IUser } from "../../types/types";
 import Styles from "./user.module.css";
+import { connector } from "../../api/API";
 
 interface IProps {
   user: IUser;
@@ -14,7 +15,7 @@ function User({ user }: IProps) {
         <p>Age: {user.age}.</p>
         <p>Hobbies: {user.hobbies.join(", ")}.</p>
       </div>
-      <button>Delete</button>
+      <button onClick={() => connector.deleteUser(user.id)}>Delete</button>
     </div>
   );
 }
