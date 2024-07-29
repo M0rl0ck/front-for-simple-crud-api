@@ -1,29 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Styles from "./App.module.css";
-import { IUser } from "./types/types";
-import { connector } from "./api/API";
-import { STATUS_CODES } from "./constants/statusCodes";
 import Users from "./components/Users/Users";
 import NewUserModal from "./components/NewUser/NewUser";
+import {
+  UsersContext,
+  ErrorMessageContext,
+  GetUsersContext,
+  StatusContext,
+} from "./context/getUsersContext";
 
 const App = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
   const [newUserShowModal, setNewUserShowModal] = useState<boolean>(false);
-
-  const getUsers = async () => {
-    console.log("getUsers");
-    const { status, users } = await connector.getUsers();
-    setStatus(status.toString());
-    if (status === STATUS_CODES.OK) {
-      setErrorMessage("");
-      setUsers(users);
-    } else {
-      setUsers([]);
-      setErrorMessage(users);
-    }
-  };
+  const users = useContext(UsersContext);
+  const errorMessage = useContext(ErrorMessageContext);
+  const getUsers = useContext(GetUsersContext);
+  const status = useContext(StatusContext);
 
   return (
     <main className={Styles.main}>

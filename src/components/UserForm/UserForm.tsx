@@ -2,7 +2,8 @@ import Styles from "./userForm.module.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IErrorMessage, IUser, NewUser } from "../../types/types";
 import { STATUS_CODES } from "../../constants/statusCodes";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { GetUsersContext } from "../../context/getUsersContext";
 
 interface IFormInput {
   username: string;
@@ -19,6 +20,8 @@ interface IProps {
 }
 
 const UserForm = ({ closeModal, sandData, userData }: IProps) => {
+  const getUsers = useContext(GetUsersContext);
+
   const {
     register,
     handleSubmit,
@@ -40,6 +43,7 @@ const UserForm = ({ closeModal, sandData, userData }: IProps) => {
 
     if (res.status === STATUS_CODES.OK || res.status === STATUS_CODES.CREATED) {
       closeModal();
+      getUsers();
     } else {
       if ((res.user as IErrorMessage).message !== undefined) {
         setErrorMessage((res.user as IErrorMessage).message);
