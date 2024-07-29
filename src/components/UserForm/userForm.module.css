@@ -1,0 +1,13 @@
+.statusOk,
+.statusError {
+  background-color: aliceblue;
+  font-size: 0.8rem;
+}
+
+.statusOk {
+  color: green;
+}
+
+.statusError {
+  color: red;
+}

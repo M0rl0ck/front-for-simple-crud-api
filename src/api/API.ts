@@ -1,5 +1,5 @@
 import { STATUS_CODES } from "../constants/statusCodes";
-import { IUser, NewUser } from "../types/types";
+import { IErrorMessage, IUser, NewUser } from "../types/types";
 
 class Connector {
   baseURL: string;
@@ -22,7 +22,6 @@ class Connector {
     };
     const response = await fetch(`${this.baseURL}/${id}`, requestInit);
     const status = response.status;
-    console.log(status);
     const message = await response.json();
 
     return { status, message };
@@ -42,7 +41,7 @@ class Connector {
 
   async getUser(
     id: string
-  ): Promise<{ status: number; user: IUser | { message: string } }> {
+  ): Promise<{ status: number; user: IUser | IErrorMessage }> {
     const { status, message: user } = await this.request(id);
 
     return { status, user };
@@ -50,7 +49,7 @@ class Connector {
 
   async createUser(
     body: NewUser
-  ): Promise<{ status: number; user: IUser | { message: string } }> {
+  ): Promise<{ status: number; user: IUser | IErrorMessage }> {
     const { status, message: user } = await this.request("", "POST", body);
 
     return { status, user };
@@ -59,7 +58,7 @@ class Connector {
   async updateUser(
     id: string,
     body: NewUser
-  ): Promise<{ status: number; user: IUser | { message: string } }> {
+  ): Promise<{ status: number; user: IUser | IErrorMessage }> {
     const { status, message: user } = await this.request(id, "PUT", body);
 
     return { status, user };
@@ -67,7 +66,7 @@ class Connector {
 
   async deleteUser(
     id: string
-  ): Promise<{ status: number; message: undefined | { message: string } }> {
+  ): Promise<{ status: number; message: undefined | IErrorMessage }> {
     const { status, message } = await this.request(id, "DELETE");
 
     return { status, message };

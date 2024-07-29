@@ -7,4 +7,8 @@ interface IUser extends NewUser {
   id: string;
 }
 
-export type { IUser, NewUser };
+interface IErrorMessage {
+  message: string;
+}
+
+export type { IUser, NewUser, IErrorMessage };
