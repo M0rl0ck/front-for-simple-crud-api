@@ -13,9 +13,10 @@ interface IProps {
   sandData: (
     data: NewUser
   ) => Promise<{ status: number; user: IUser | { message: string } }>;
+  userData?: IUser;
 }
 
-const UserForm = ({ closeModal, sandData }: IProps) => {
+const UserForm = ({ closeModal, sandData, userData }: IProps) => {
   const {
     register,
     handleSubmit,
@@ -27,7 +28,7 @@ const UserForm = ({ closeModal, sandData }: IProps) => {
     await sandData({
       username,
       age,
-      hobbies: hobbies.split(","),
+      hobbies: hobbies.split(",").map((el) => el.trim()),
     });
     closeModal();
   };
@@ -41,6 +42,7 @@ const UserForm = ({ closeModal, sandData }: IProps) => {
       <div>
         <label>Name:</label>{" "}
         <input
+          defaultValue={userData?.username || ""}
           {...register("username", {
             required: '"Name" is required',
             validate: (value) =>
@@ -57,6 +59,7 @@ const UserForm = ({ closeModal, sandData }: IProps) => {
         <label>Age:</label>{" "}
         <input
           type="number"
+          defaultValue={userData?.age || ""}
           {...register("age", {
             required: '"Age" is required',
             valueAsNumber: true,
@@ -66,7 +69,11 @@ const UserForm = ({ closeModal, sandData }: IProps) => {
         {errors.age && <p>{errors.age.message}</p>}
       </div>
       <div>
-        <label>Hobbies:</label> <input {...register("hobbies")} />
+        <label>Hobbies:</label>{" "}
+        <input
+          defaultValue={userData?.hobbies.join(", ") || ""}
+          {...register("hobbies")}
+        />
       </div>{" "}
       <button>Create</button>
     </form>

@@ -7,3 +7,9 @@
     3px 3px 3px 2px #7a7979,
     6px 6px 3px 2px #aaa9a9;
 }
+
+.userButtons {
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+}

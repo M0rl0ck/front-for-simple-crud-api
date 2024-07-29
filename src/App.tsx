@@ -4,7 +4,7 @@ import { IUser } from "./types/types";
 import { connector } from "./api/API";
 import { STATUS_CODES } from "./constants/statusCodes";
 import Users from "./components/Users/Users";
-import NewUser from "./components/NewUser/NewUser";
+import NewUserModal from "./components/NewUser/NewUser";
 
 const App = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -36,7 +36,7 @@ const App = () => {
       <div>Status: {status}</div>
       <Users users={users} errorMessage={errorMessage} />
       {newUserShowModal && (
-        <NewUser setNewUserShowModal={setNewUserShowModal} />
+        <NewUserModal setNewUserShowModal={setNewUserShowModal} />
       )}
     </main>
   );
