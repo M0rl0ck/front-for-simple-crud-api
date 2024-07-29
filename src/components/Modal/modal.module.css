@@ -68,7 +68,7 @@
 
 @keyframes openModal {
   from {
-    transform: scale(0) translate(0, 100vh);
+    transform: translate(0, 60vh) scale(0.1);
   }
   to {
     transform: scale(1) translate(0, 0);
@@ -89,6 +89,6 @@
     transform: scale(1) translate(0, 0);
   }
   to {
-    transform: scale(0) translate(0, 100vh);
+    transform: translate(0, 60vh) scale(0.1);
   }
 }
